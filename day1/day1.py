@@ -7,11 +7,10 @@ def day_1(main_list):
         local_list = []
         for i in line_data:
             if i.isdigit():
-                local_list.append(int(i))
-        item = local_list[0] * 10 + local_list[-1]
-        print(item)
-        my_sum_list.append(local_list[0] * 10 + local_list[-1])
-    # my_sum_list.sort(key=None, reverse=True)
+                local_list.append(i)
+        item = local_list[0] + local_list[-1]
+        # print(item)
+        my_sum_list.append(int(local_list[0]  + local_list[-1]))
     return sum(my_sum_list)
 
 
