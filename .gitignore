@@ -1,4 +1,7 @@
 .idea/
+set_env.sh
+venv-mac
+venv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

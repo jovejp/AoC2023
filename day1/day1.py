@@ -8,9 +8,7 @@ def day_1(main_list):
         for i in line_data:
             if i.isdigit():
                 local_list.append(i)
-        item = local_list[0] + local_list[-1]
-        # print(item)
-        my_sum_list.append(int(local_list[0]  + local_list[-1]))
+        my_sum_list.append(int(local_list[0] + local_list[-1]))
     return sum(my_sum_list)
 
 

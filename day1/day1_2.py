@@ -13,8 +13,6 @@ def day1_2(main_list):
                 for d, v in enumerate(str_num_list):
                     if line_data[i:].startswith(v):
                         local_list.append(str(d + 1))
-        item = local_list[0] + local_list[-1]
-        # print(item)
         my_sum_list.append(int(local_list[0] + local_list[-1]))
     return sum(my_sum_list)
 
