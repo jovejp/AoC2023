@@ -58,7 +58,7 @@ def read_file_array_of_array(file_name):
         tmp_line = line.strip()
         tmp_list = []
         for x in tmp_line:
-            tmp_list.append(int(x))
+            tmp_list.append(x)
         my_main_list.append(tmp_list)
         line = f.readline()
     f.close()
