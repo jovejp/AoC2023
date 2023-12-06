@@ -35,7 +35,7 @@ def day6_2_new(main_list):
     dist = main_list["distance"]
     count = 0
     start_num = int(dist / game_time)
-    x = search(range(start_num, 2 * start_num), game_time, dist, True)
+    x = start_num + search(range(start_num, 2 * start_num), game_time, dist, True)
     while x < game_time:
         if x * (game_time - x) > dist:
             if (x + start_num) * (game_time - x - start_num) > dist:
