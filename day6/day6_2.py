@@ -33,22 +33,9 @@ def search(nums, time, target, flag):
 def day6_2_new(main_list):
     game_time = main_list["time"]
     dist = main_list["distance"]
-    count = 0
     start_num = int(dist / game_time)
     x = start_num + search(range(start_num, 2 * start_num), game_time, dist, True)
-    while x < game_time:
-        if x * (game_time - x) > dist:
-            if (x + start_num) * (game_time - x - start_num) > dist:
-                x = x + start_num
-                count = count + start_num
-            else:
-                y = search(range(x, x + start_num), game_time, dist, False)
-                count = count + y
-                x = x + y + 1
-        else:
-            x += 1
-            if count > 0:
-                break
+    count = search(range(x, dist), game_time, dist, False)
     return count
 
 
@@ -60,7 +47,6 @@ def day6_2(main_list):
     print(start_num)
     x = start_num
     while x < game_time:
-        # print("x", x, "count", count)
         if x * (game_time - x) > dist and (x + start_num) * (game_time - x - start_num) > dist:
             x = x + start_num
             count = count + start_num
