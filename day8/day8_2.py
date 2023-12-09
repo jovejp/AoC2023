@@ -1,6 +1,7 @@
 from collections import defaultdict
 import math
 
+
 def read_file_day8(file_name):
     f = open(file_name)
     action = f.readline().strip()
@@ -15,7 +16,7 @@ def read_file_day8(file_name):
     return action, action_path
 
 
-def day_7(action, action_path):
+def day8_2(action, action_path):
     step = 0
     cur_keys = []
     for x in action_path.keys():
@@ -41,6 +42,5 @@ def day_7(action, action_path):
 
 if __name__ == '__main__':
     action, action_path = read_file_day8("day8.txt")
-    # print(action, action_path)
-    total_step = day_7(action, action_path)
+    total_step = day8_2(action, action_path)
     print(total_step)
