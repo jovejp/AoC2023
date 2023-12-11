@@ -9,17 +9,17 @@ row_size = len(input_list)
 
 
 def day_10(data):
-    # find null row and lines
+    # find star row and cols
     star_row_dict = defaultdict(list)
     star_col_dict = defaultdict(list)
-    #
+
     for idx, x in enumerate(input_list):
         for idy, y in enumerate(x):
             if y == "#":
                 star_row_dict[idx].append(idy)
                 star_col_dict[idy].append(idx)
 
-    # create pairs
+    # create pairs and generate steps
     node_list = []
     for k, v in star_row_dict.items():
         for d in v:
