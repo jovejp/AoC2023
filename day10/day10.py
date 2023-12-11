@@ -6,7 +6,7 @@ col_size = len(input_list[0])
 row_size = len(input_list)
 moved_step = []
 valid_next_step = defaultdict(list)
-pipelines = ["-", "L", "J", "|", "7", "F"]
+pipelines = ["J", "7", "F", "-", "L", "|"]
 
 
 def day_10(data):
@@ -24,12 +24,12 @@ def day_10(data):
         process_list = []
         moved_list = []
         process_list.append([sx, sy])
-        print("start", pipeline)
+        print("start check", pipeline)
         while process_list:
             nx, ny = process_list.pop()
             if [nx, ny] in moved_list:
-                print("final", nx, ny, moved_list)
-                steps_list.append(step/2)
+                # print("final", nx, ny, moved_list)
+                steps_list.append(step / 2)
                 break
             else:
                 step += 1
@@ -60,6 +60,9 @@ def day_10(data):
                                 and ([nx + 1, ny] not in moved_list)):
                             process_list.append([nx + 1, ny])
                 # print("next", step, cur_pipe, process_list)
+        print("checked", pipeline)
+        if steps_list:
+            break
     return steps_list
 
 

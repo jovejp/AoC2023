@@ -20,6 +20,7 @@ def day_10(data):
             break
     steps_list = []
     start_s = ""
+    moved_list = []
     for pipeline in pipelines:
         print("start checking", pipeline)
         step = 0
@@ -30,7 +31,7 @@ def day_10(data):
             nx, ny = process_list.pop()
             if [nx, ny] in moved_list:
                 start_s = pipeline
-                # print("final", pipeline, nx, ny, moved_list)
+                print("final", pipeline, nx, ny, moved_list)
                 steps_list.append(step / 2)
                 break
             else:
@@ -62,10 +63,10 @@ def day_10(data):
                                 and ([nx + 1, ny] not in moved_list)):
                             process_list.append([nx + 1, ny])
         print("checked", pipeline)
-        if moved_list:
+        if steps_list:
             break
 
-    print("step", steps_list, "pipeline", start_s, "len(moved list)", len(moved_list)/2)
+    print("step", steps_list, "pipeline", start_s)
     data[sx][sy] = start_s
 
     action_list = defaultdict(list)
