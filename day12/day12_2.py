@@ -1,4 +1,5 @@
 from func_utils import read_file_array
+import time
 
 input_list = read_file_array("day12.txt")
 scanned_list = {}
@@ -35,11 +36,14 @@ def day_12(data):
         condition_list = [int(x) for x in line_data_list[1].split(",")] * 5
         scanned_list.clear()
         row_steps = find_step(base_str, condition_list, 0, 0, 0)
-        print(base_str, condition_list, row_steps)
+        # print(base_str, condition_list, row_steps)
         total_steps.append(row_steps)
     return sum(total_steps)
 
 
 if __name__ == '__main__':
+    t = time.process_time()
     total_step = day_12(input_list)
     print(total_step)
+    elapsed_time = time.process_time() - t
+    print(elapsed_time)
