@@ -1,5 +1,6 @@
 from func_utils import read_file_array
 import itertools
+import z3
 
 debug = False
 file_name = "input_sample.txt" if debug else "input.txt"
@@ -56,25 +57,27 @@ def final_check(x, y):
                     and cell_vector(a, b, a, c) * cell_vector(a, b, a, d) < 0) else False
 
 
-def func():
+def part1():
     count = 0
     for a, b in itertools.combinations(ns_box, 2):
         count += (1 if final_check(a, b) else 0) if quick_check(a, b) else 0
     return count
 
 
-def part1():
-    result = func()
-    return result
-
-
 def part2():
-    result = func()
-    return result
+    xi, yi, zi, vxi, vyi, vzi = z3.Ints("xi yi zi vxi vyi vzi")
+    ts = [z3.Int(f'ts{i}') for i in range(3)]
+    s = z3.Solver()
+    for i in range(3):
+        s.add(xi + ts[i] * vxi == ns[i][0] - ts[i] * ns[i][3])
+        s.add(yi + ts[i] * vyi == ns[i][1] - ts[i] * ns[i][4])
+        s.add(zi + ts[i] * vzi == ns[i][2] - ts[i] * ns[i][5])
+    s.check()
+    return s.model().eval(xi + yi + zi)
 
 
 if __name__ == '__main__':
     r_p1 = part1()
     print("part1", r_p1)
-#     r_p2 = part2()
-#     print("part2", r_p2)
+    r_p2 = part2()
+    print("part2", r_p2)
