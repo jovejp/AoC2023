@@ -1,9 +1,10 @@
 from func_utils import read_file_array
 from collections import OrderedDict
 from collections import defaultdict
+from collections import deque
 from copy import deepcopy
 
-debug = True
+debug = False
 file_name = "input_sample.txt" if debug else "input.txt"
 input_list = read_file_array(file_name)
 
@@ -64,7 +65,6 @@ movable_bricks = set()
 
 
 def func(ls_puzzle):
-    depends(ls_puzzle)
     not_movable_bricks = set()
     for key in ls_puzzle.keys():
         if len(ls_depends_on[key]) == 1:
@@ -89,34 +89,53 @@ def part1(ls_puzzle):
     return len(movable_bricks)
 
 
-result_list = defaultdict(list)
+# def dfs(key):
+#     worker_q = deque([key])
+#     push_later_set = set()
+#     next_push_later_set = set()
+#     result = []
+#     while worker_q or push_later_set:
+#         if not worker_q :
+#             # for the brick depends on multiple bricks, check if all depends on bricks be impacted.
+#             if push_later_set:
+#                 while push_later_set:
+#                     if_node = push_later_set.pop()
+#                     if all(rr in result + [cur_node] for rr in ls_depends_on[if_node]):
+#                         if if_node not in result:
+#                             print(if_node, "vv in critical")
+#                             result.append(if_node)
+#                             worker_q.append(if_node)
+#                     else:
+#                         next_push_later_set.add(if_node)
+#                 push_later_set = next_push_later_set.copy()
+#                 next_push_later_set.clear()
+#                 if worker_q:
+#                     continue
+#                 else:
+#                     break
+#         cur_node = worker_q.pop()
+#         if len(ls_depends_by[cur_node]) > 0:
+#             for vv in ls_depends_by[cur_node]:
+#                 if all(rr in result + [cur_node] for rr in ls_depends_on[vv]):
+#                     if vv not in result:
+#                         result.append(vv)
+#                         worker_q.append(vv)
+#                 else:
+#                     if vv not in push_later_set:
+#                         push_later_set.add(vv)
+#     return result
 
-
-def dfs(key, processed_nodes):
-    # print("dfs started", key, processed_nodes)
-    if key in result_list.keys():
-        return result_list[key]
+def dfs(key):
+    worker_q = deque([key])
     result = []
-    next_list = []
-    all_next_valid_flag = True
-    if len(ls_depends_by[key]) > 0:
-        for vv in ls_depends_by[key]:
-            if all(rr in processed_nodes + [key] for rr in ls_depends_on[vv]):
-                if vv not in result:
-                    result += [vv]
-                    next_list.append(vv)
-            # else:
-                # print("which action need???", key, ls_depends_by[key], vv, ls_depends_on[vv], processed_nodes)
-        for vv in next_list:
-            # print("dfs -callback", key, vv, next_list, "by", ls_depends_by[key], "on", ls_depends_on[vv])
-            result = list(set(result + dfs(vv, list(set(processed_nodes + result)))))
-    # else:
-        # print("!!!!", key, "no depend by", ls_depends_by[key])
-    if (len(ls_depends_by[key]) == 1 and len(ls_depends_on[ls_depends_by[key][0]]) == 1 and
-            key == ls_depends_on[ls_depends_by[key][0]][0] and processed_nodes == []):
-        # print("******memory", key, list(set(result)), 'refer info', ls_depends_by[key], ls_depends_on[ls_depends_by[key][0]][0])
-        result_list[key] = list(set(result))
-    # print("final****=====", key, list(set(result)))
+    while worker_q:
+        cur_node = worker_q.pop()
+        if len(ls_depends_by[cur_node]) > 0:
+            for vv in ls_depends_by[cur_node]:
+                if all(rr in result + [cur_node] for rr in ls_depends_on[vv]):
+                    if vv not in result:
+                        result.append(vv)
+                        worker_q.append(vv)
     return result
 
 
@@ -125,12 +144,9 @@ def func_part2(ls_puzzle):
     rev_ls_puzzle = deepcopy(ls_puzzle)
     rev_ls_puzzle = OrderedDict(
         sorted(rev_ls_puzzle.items(), key=lambda item: (item[1][0], item[0][0], item[0][1]), reverse=True))
-    # func(ls_puzzle)
-    print(ls_depends_by)
     for key in rev_ls_puzzle.keys():
         if key not in movable_bricks:
-            value = set(dfs(key, []))
-            # print(key, len(value), value)
+            value = set(dfs(key))
             total += len(value)
     return total
 
@@ -144,6 +160,7 @@ if __name__ == '__main__':
     ls_tower = process_input()
     ls_o_tower = fall(ls_tower)
     ls_b_tower = deepcopy(ls_o_tower)
+    depends(ls_o_tower)
     r_p1 = part1(ls_o_tower)
     print("part1", r_p1)
 
