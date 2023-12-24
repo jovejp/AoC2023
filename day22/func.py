@@ -89,6 +89,42 @@ def part1(ls_puzzle):
     return len(movable_bricks)
 
 
+# def dfs(key):
+#     worker_q = deque([key])
+#     push_later_set = set()
+#     next_push_later_set = set()
+#     result = []
+#     while worker_q or push_later_set:
+#         if not worker_q :
+#             # for the brick depends on multiple bricks, check if all depends on bricks be impacted.
+#             if push_later_set:
+#                 while push_later_set:
+#                     if_node = push_later_set.pop()
+#                     if all(rr in result + [cur_node] for rr in ls_depends_on[if_node]):
+#                         if if_node not in result:
+#                             print(if_node, "vv in critical")
+#                             result.append(if_node)
+#                             worker_q.append(if_node)
+#                     else:
+#                         next_push_later_set.add(if_node)
+#                 push_later_set = next_push_later_set.copy()
+#                 next_push_later_set.clear()
+#                 if worker_q:
+#                     continue
+#                 else:
+#                     break
+#         cur_node = worker_q.pop()
+#         if len(ls_depends_by[cur_node]) > 0:
+#             for vv in ls_depends_by[cur_node]:
+#                 if all(rr in result + [cur_node] for rr in ls_depends_on[vv]):
+#                     if vv not in result:
+#                         result.append(vv)
+#                         worker_q.append(vv)
+#                 else:
+#                     if vv not in push_later_set:
+#                         push_later_set.add(vv)
+#     return result
+
 def dfs(key):
     worker_q = deque([key])
     result = []
