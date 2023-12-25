@@ -23,7 +23,7 @@ def dfs(sp, p2=False):
         cur_path, cur_sp, cur_moved_nodes = qw.pop()
         if cur_sp[0] == total_rows - 1:
             his_path[cur_path] = cur_moved_nodes
-            break  # continue <- just lucy to find in first search
+            continue # break   <- just lucy to find in first search
         idx = 0
         for nd in dirs:
             yy = [nd[0] + cur_sp[0], nd[1] + cur_sp[1]]
@@ -59,15 +59,15 @@ def part1():
 def part2():
     his_path.clear()
     all_path = dfs([0, 1], True)
-    if all_path:
-        result = max([len(x) for x in all_path.values()])
-    else:
-        result = 0
+    result = 0
+    for x in all_path.values():
+        # print(len(x))
+        result = max(result, len(x))
     return result - 1
 
 
 if __name__ == '__main__':
     r_p1 = part1()
     print("part1", r_p1)
-    # r_p2 = part2()
-    # print("part2", r_p2)
+    r_p2 = part2()
+    print("part2", r_p2)
